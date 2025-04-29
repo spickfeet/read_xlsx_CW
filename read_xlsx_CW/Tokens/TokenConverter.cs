@@ -86,7 +86,7 @@ namespace CW_read_xlsx.Tokens
                                     indexOffset++;
                                 }
                                 nonValidText += match.Value[i];
-                                if(nonValidSymbols.Contains(match.Value[i + 1]))
+                                if(i + 1 != match.Value.Length && nonValidSymbols.Contains(match.Value[i + 1]))
                                 {
                                     continue;
                                 }
