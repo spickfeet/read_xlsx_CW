@@ -13,7 +13,7 @@ namespace CW_read_xlsx.Tokens
     {
         public static List<TokenData> CreateTokens(string text, List<ErrorData> lexicalErrors)
         {
-            Regex regex = new(@"read_xlsx|\s|((?!(read_xlsx))[^\.();,\s])+|\.|\(|\)|;|,");
+            Regex regex = new(@"read_xlsx|\s|((?!(read_xlsx))[^();,\s])+|\(|\)|;|,");
             List<TokenData> tokens = new();
             int tempLineNumber = 1;
             int tempLineOffset = 0;
@@ -72,7 +72,7 @@ namespace CW_read_xlsx.Tokens
                     else
                     {
 
-                        string nonValidSymbols = "!@\"№#$%^:&?*\\/.<>{}[];:\'`~-+=";
+                        string nonValidSymbols = "!@\"№#$%^:&?*\\/.<>{}[];:\'`~-+=~ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ";
                         StringBuilder validLineSB = new StringBuilder();
                         string nonValidText = "";
                         int indexOffset = 0;
@@ -86,12 +86,12 @@ namespace CW_read_xlsx.Tokens
                                     indexOffset++;
                                 }
                                 nonValidText += match.Value[i];
-                                if(nonValidSymbols.Contains(match.Value[i + 1]))
+                                if(i + 1 != match.Value.Length && nonValidSymbols.Contains(match.Value[i + 1]))
                                 {
                                     continue;
                                 }
                                 lexicalErrors.Add(new(tempLineNumber, tempLineOffset + i - nonValidText.Length + 1, 
-                                    $"{nonValidText} не является валидным", globalIndex + i - nonValidText.Length + 1));
+                                    $"{nonValidText} не является валидным", globalIndex + i));
                                 nonValidText = "";
                                 continue;
                             }
@@ -125,7 +125,7 @@ namespace CW_read_xlsx.Tokens
                                 if (argStartIndex > 0)
                                 {
                                     lexicalErrors.Add(new(tempLineNumber, tempLineOffset,
-                                    $"Аргумент не может начинаться с числа", globalIndex));
+                                    $"Аргумент не может начинаться с числа", globalIndex + argStartIndex - 1));
                                 }
                                 tokens.Add(new(TokenEnum.ARGUMENT, subMatch.Value.Replace(" ", ""), tempLineNumber, tempLineOffset,globalIndex));
                                 tempLineOffset += subMatch.Value.Length;
