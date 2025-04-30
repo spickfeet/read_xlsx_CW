@@ -11,14 +11,14 @@ namespace CW_read_xlsx.State
         public int Line { get; set; }
         public int LocalIndex { get; set; }
         public string Text { get; set; }
-        public int GlobalIndex { get; set; }
+        public int GlobalEndIndex { get; set; }
 
-        public ErrorData(int line, int localIndex, string text, int globalIndex) 
+        public ErrorData(int line, int localIndex, string text, int globalEndIndex) 
         {
             Line = line;
             LocalIndex = localIndex;
             Text = text;
-            GlobalIndex = globalIndex;
+            GlobalEndIndex = globalEndIndex;
         }
 
     }

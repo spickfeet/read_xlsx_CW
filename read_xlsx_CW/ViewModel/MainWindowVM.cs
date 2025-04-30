@@ -208,7 +208,7 @@ namespace CW_read_xlsx.ViewModel
                     }
                     else
                     {
-                        errorsData = errorsData.OrderBy(b => b.GlobalIndex).ToList();
+                        errorsData = errorsData.OrderBy(b => b.GlobalEndIndex).ToList();
                         DebugText = $"Строка: {errorsData[0].Line} Глобальный индекс: {errorsData[0].LocalIndex} Ошибка {errorsData[0].Text} \n";
                     }
                 });
